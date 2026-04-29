@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "https://app.valentine-esteban.ovh/api";
 
 export async function rechercherJoueur(prenom, nom) {
     const res = await fetch(
