@@ -30,13 +30,13 @@ const formatDate = (dateStr) =>
     day: "2-digit", month: "2-digit", year: "2-digit",
   });
 
-const formatCordage = (marque, nom, diametre) =>
-  `${marque} ${nom} ${diametre}mm`;
+const formatCordage = (marque, nom, jauge) =>
+  `${marque} ${nom} ${jauge}mm`;
 
 const isSameCordage = (pose) =>
   pose.travers_marque === pose.montant_marque &&
   pose.travers_nom === pose.montant_nom &&
-  pose.travers_diametre === pose.montant_diametre;
+  pose.travers_jauge === pose.montant_jauge;
 
 const getBadgeStyle = (type) => {
   const config = TYPE_CONFIG[type];
@@ -69,9 +69,9 @@ const CordageLine = ({ prefix, texte }) => (
 );
 
 const PoseCard = ({ pose }) => {
-  const montantStr  = formatCordage(pose.montant_marque, pose.montant_nom, pose.montant_diametre);
-  const isHybride   = pose.travers_marque && pose.travers_nom && pose.travers_diametre && !isSameCordage(pose);
-  const traversStr  = isHybride ? formatCordage(pose.travers_marque, pose.travers_nom, pose.travers_diametre) : null;
+  const montantStr  = formatCordage(pose.montant_marque, pose.montant_nom, pose.montant_jauge);
+  const isHybride   = pose.travers_marque && pose.travers_nom && pose.travers_jauge && !isSameCordage(pose);
+  const traversStr  = isHybride ? formatCordage(pose.travers_marque, pose.travers_nom, pose.travers_jauge) : null;
   const dotColor    = getDotColor(pose.montant_type);
 
   return (
@@ -148,7 +148,7 @@ function Joueur({ joueur, onRetour }) {
     if (!totalPoses) return null;
     const compteur = {};
     poses.forEach((p) => {
-      const key = formatCordage(p.montant_marque, p.montant_nom, p.montant_diametre);
+      const key = formatCordage(p.montant_marque, p.montant_nom, p.montant_jauge);
       compteur[key] = (compteur[key] || 0) + 1;
     });
     const [nom, count] = Object.entries(compteur).sort((a, b) => b[1] - a[1])[0];
