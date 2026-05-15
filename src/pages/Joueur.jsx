@@ -139,8 +139,11 @@ function Joueur({ joueur, onRetour }) {
   const [poses, setPoses] = useState([]);
 
   useEffect(() => {
-    recupererPoses(joueur.id).then(setPoses);
-  }, [joueur.id]);
+    if (!joueur?.id) return;
+    recupererPoses(joueur.id)
+      .then(setPoses)
+      .catch((err) => console.error("Erreur récupération poses :", err));
+}, [joueur?.id]);
 
   const totalPoses = poses.length;
 
